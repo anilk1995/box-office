@@ -1,4 +1,4 @@
-const BASE_URL = "https://api.tvmaze.com";
+const BASE_URL = 'https://api.tvmaze.com';
 
 async function apiGet(queryString) {
   const response = await fetch(`${BASE_URL}/${queryString}`);
@@ -7,5 +7,8 @@ async function apiGet(queryString) {
   return data;
 }
 
-export const searchForShows = (searchString) =>
+export const searchForShows = searchString =>
   apiGet(`/search/shows?q=${searchString}`);
+
+export const searchForPeople = searchString =>
+  apiGet(`/search/people?q=${searchString}`);
