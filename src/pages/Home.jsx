@@ -1,25 +1,23 @@
 import { useState } from 'react';
 import { searchForShows, searchForPeople } from '../api/tvmaze';
+import SearchForm from '../components/SearchForm';
 
 function Home() {
-  const [searchQuery, setSearchQuery] = useState('');
   const [apiData, setApiData] = useState(null);
   const [apiDataError, setApiDataError] = useState(null);
-  const [searchOption, setSearchOption] = useState('shows');
-  async function onSearch(e) {
-    e.preventDefault();
-
+  async function onSearch({ q, searchOption }) {
     try {
       setApiDataError(null);
 
+      let result;
+
       if (searchOption === 'shows') {
-        const result = await searchForShows(searchQuery);
-        setApiData(result);
+        result = await searchForShows(q);
       }
       if (searchOption === 'actors') {
-        const result = await searchForPeople(searchQuery);
-        setApiData(result);
+        result = await searchForPeople(q);
       }
+      setApiData(result);
     } catch (error) {
       setApiDataError(error);
     }
@@ -40,37 +38,9 @@ function Home() {
           ));
     }
   };
-  console.log(searchOption);
   return (
     <div>
-      <form onSubmit={onSearch}>
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={e => setSearchQuery(e.target.value)}
-        />
-        <label>
-          <input
-            type="radio"
-            name="search-option"
-            value="shows"
-            checked={searchOption === 'shows'}
-            onChange={e => setSearchOption(e.target.value)}
-          />
-          Shows
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="search-option"
-            value="actors"
-            checked={searchOption === 'actors'}
-            onChange={e => setSearchOption(e.target.value)}
-          />
-          Actors
-        </label>
-        <button type="submit">Search</button>
-      </form>
+      <SearchForm onSearch={onSearch} />
 
       <div>{renderApiData()}</div>
     </div>
