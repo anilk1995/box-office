@@ -12,3 +12,5 @@ export const searchForShows = searchString =>
 
 export const searchForPeople = searchString =>
   apiGet(`/search/people?q=${searchString}`);
+
+export const getShowById = showId => apiGet(`shows/${showId}`);
