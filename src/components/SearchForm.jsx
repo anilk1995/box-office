@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { useSearchstr } from '../lib/useSearchstr';
 
 function SearchForm({ onSearch }) {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useSearchstr();
   const [searchOption, setSearchOption] = useState('shows');
   const onSubmit = e => {
     e.preventDefault();
